@@ -24,6 +24,7 @@ const BlogCard = ({
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(title);
+  const [like,setlike]= useState(postlike)
   const handleAddComment = async() => {
     if (newComment.trim() !== "") {
       const Data = {
@@ -170,8 +171,10 @@ const BlogCard = ({
   
 
   const likeBlog = async () => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const id =userDetails.userId;
     const Data = {
-      userid: userId,
+      userid: id,
       postid: postId,
     };
     try {
@@ -185,6 +188,7 @@ const BlogCard = ({
       const responseData = await response.json();
       if (responseData.ok) {
         setcount(responseData.post);
+        setlike(responseData?.post?.length)
       } else {
         window.alert(responseData.message);
       }
@@ -259,7 +263,7 @@ const BlogCard = ({
       )}
       </div>
       
-      <button id={id} onClick={likeBlog}>LIKE {postlike}</button>
+      <button id={id} onClick={likeBlog}>LIKE {like}</button>
       <div className="comments-section">
       <h4>Comments</h4>
       <ul>
