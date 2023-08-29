@@ -58,10 +58,15 @@ const BlogCard = ({
     }
   };
   const deleteBlog = async () => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const id =userDetails.userId;
     const Data = {
       userid: userId,
       postid: postId,
+      id
     };
+    
+    
     try {
       const response = await fetch(
         process.env.REACT_APP_API+"api/blog/deleteBlog",
@@ -85,18 +90,27 @@ const BlogCard = ({
   };
   
   const toggleEditTitle = () => {
+    
     setIsEditingTitle(!isEditingTitle);
+      
   };
   const toggleEditDescription = () => {
+    
     setIsEditingDescription(!isEditingDescription);
   };
   const editTitle = async () => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const id =userDetails.userId;
     try {
       const Data = {
         userid: userId,
         postid: postId,
         newTitle: newTitle,
+        id
       };
+
+      
+
       const response = await fetch(
         process.env.REACT_APP_API+"api/blog/editBlogTitle",
         {
@@ -119,12 +133,19 @@ const BlogCard = ({
     }
   };
   const editDescription = async () => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const id =userDetails.userId;
     try {
       const Data = {
         userid: userId,
         postid: postId,
         newDescription: newDescription,
+        id
       };
+
+    
+   
+
       const response = await fetch(
         process.env.REACT_APP_API+"api/blog/editBlogDescription",
         {
