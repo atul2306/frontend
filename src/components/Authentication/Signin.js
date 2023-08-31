@@ -28,8 +28,9 @@ const Signin = () => {
           },
           body: JSON.stringify(loginData),
         });
-        if (response.ok) {
-            const responseData = await response.json()
+        const responseData = await response.json()
+
+        if (responseData.ok) {
 
             localStorage.setItem('token', responseData.token);
             localStorage.setItem('userDetails', JSON.stringify(responseData.userDetails));
@@ -37,8 +38,6 @@ const Signin = () => {
           window.alert(responseData.message)
           window.location.href= "/blog/dashboard"
         } else {
-            const responseData = await response.json()
-
             window.alert(responseData.message)
         }
       } catch (error) {

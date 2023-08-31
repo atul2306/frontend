@@ -15,7 +15,8 @@ const BlogCard = ({
   setTitle,
   setDescription,
   id,
-  postlike
+  postlike,
+  postComment
   
 }) => {
   
@@ -25,6 +26,8 @@ const BlogCard = ({
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(title);
   const [like,setlike]= useState(postlike)
+  const [comment, setcomment] = useState(postComment)
+  console.log(comment,30);
   const handleAddComment = async() => {
     if (newComment.trim() !== "") {
       const Data = {
@@ -47,6 +50,10 @@ const BlogCard = ({
         console.log(responseData,37);
         if (responseData.ok) {
           setComments(responseData.comments);
+          setTimeout(() => {
+            console.log(comments);
+          }, 3000);
+          setcomment(responseData.comments)
         } else {
           window.alert(responseData.message);
         }
@@ -267,7 +274,7 @@ const BlogCard = ({
       <div className="comments-section">
       <h4>Comments</h4>
       <ul>
-        {comments.map((comment, index) => (
+        {comment.map((comment, index) => (
           <li key={index}>{comment.comment}</li>
         ))}
       </ul>
