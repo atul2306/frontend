@@ -6,6 +6,11 @@ const AddBlog = ({ setblog }) => {
     description: "",
     media: null,
   });
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+  });
+   
 
   const handleChange = (event) => {
     const { name, value, type } = event.target;
@@ -22,6 +27,31 @@ const AddBlog = ({ setblog }) => {
         [name]: value,
       }));
     }
+    if (name === "title") {
+      if (value.length < 5) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          title: "Title must be at least 5 characters long.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          title: "",
+        }));
+      }
+    } else if (name === "description") {
+      if (value.length < 5) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          description: "Description must be at least 5 characters long.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          description: "",
+        }));
+      }
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -34,6 +64,9 @@ const AddBlog = ({ setblog }) => {
     formdata.append("description", description);
     formdata.append("media", media);
     formdata.append("id", userDetails.userId);
+    if (errors.title || errors.description) {
+      return; 
+    }
     try {
       const response = await fetch(process.env.REACT_APP_API+"api/blog/addBlog", {
         method: "POST",
@@ -73,6 +106,7 @@ const AddBlog = ({ setblog }) => {
             onChange={handleChange}
             required
           />
+          {errors.title && <div className="error">{errors.title}</div>}
         </div>
         <div className="form-group">
           <label htmlFor="description">Description:</label>
@@ -83,6 +117,7 @@ const AddBlog = ({ setblog }) => {
             onChange={handleChange}
             required
           />
+          {errors.description && <div className="error">{errors.description}</div>}
         </div>
         <div className="form-group">
           <label htmlFor="media">Upload Media:</label>
