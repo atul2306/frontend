@@ -223,6 +223,7 @@ const BlogCard = ({
   {isEditingTitle ? (
     <>
       <input
+      required
         type="text"
         value={newTitle}
         onChange={(e) => setNewTitle(e.target.value)}
@@ -244,7 +245,7 @@ const BlogCard = ({
           Your browser does not support the video tag.
         </video>
       ) : (
-        <img className="card-media" src={media} alt="Blog Media" />
+        <img className="card-media" src={media} alt="Blog Media" required />
       )}
       {/* <img className="card-media" src={media} /> */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -254,6 +255,7 @@ const BlogCard = ({
       <input
         type="text"
         value={newDescription}
+        required
         onChange={(e) => setNewDescription(e.target.value)}
       />
       <button onClick={editDescription}>Save</button>
@@ -283,6 +285,7 @@ const BlogCard = ({
         placeholder="Add a comment"
         onChange={(e) => setNewComment(e.target.value)}
         value={newComment}
+        required
       />
       <button onClick={handleAddComment}>Add Comment</button>
     </div>

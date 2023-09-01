@@ -40,7 +40,6 @@ const AddBlog = ({ setblog }) => {
         body: formdata,
       });
       if (response.ok) {
-        console.log(response, 44);
         const responseData = await response.json();
         setblog(true);
       } else {
@@ -88,6 +87,7 @@ const AddBlog = ({ setblog }) => {
         <div className="form-group">
           <label htmlFor="media">Upload Media:</label>
           <input
+          required
             type="file"
             id="media"
             name="media"
